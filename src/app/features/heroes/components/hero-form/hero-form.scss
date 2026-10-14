@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-form__fields {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  row-gap: 24px;
+  padding-top: 12px;
+}
+
+.hero-form__field {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.hero-form__actions {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 16px;
+  background: var(--color-surface);
+}
+
+.hero-form__actions button + button {
+  margin-left: 16px;
+}
