@@ -62,9 +62,6 @@ describe('HeroService', () => {
         'Spider-Man (2099)',
       ]);
     });
-    it('returns an empty list when no name matches', () => {
-      expect(service.searchHeroes('test string')).toEqual([]);
-    });
 
     it('returns an empty list when no name matches', () => {
       expect(service.searchHeroes('test string')).toEqual([]);
