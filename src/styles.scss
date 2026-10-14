@@ -1,1 +1,124 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+:root {
+  --color-bg: #f4f4f4;
+  --color-surface: #ffffff;
+  --color-border: #e6e6e6;
+  --color-border-strong: #cccccc;
+  --color-text: #2b2b2b;
+  --color-text-muted: #4d4d4d;
+  --color-text-secondary: #6a6a6a;
+  --color-primary: #ff6b00;
+  --color-primary-hover: #e65f00;
+  --color-zebra: #f4f4f4;
+  --color-row-hover: #eeeeee;
+}
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$orange-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: Inter,
+      density: 0,
+    )
+  );
+}
+
+@include mat.system-classes();
+
+body {
+  color-scheme: light;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: var(--mat-sys-body-medium);
+  font-family: Inter, system-ui, sans-serif;
+  margin: 0;
+  height: 100%;
+}
+
+.btn-primary.mat-mdc-button-base,
+.btn-primary.mat-mdc-unelevated-button,
+.btn-primary.mat-mdc-raised-button {
+  --mdc-filled-button-container-color: var(--color-primary);
+  --mdc-filled-button-label-text-color: #ffffff;
+  --mdc-protected-button-container-color: var(--color-primary);
+  --mdc-protected-button-label-text-color: #ffffff;
+  --mat-button-filled-container-color: var(--color-primary);
+  --mat-button-filled-label-text-color: #ffffff;
+  --mat-button-protected-container-color: var(--color-primary);
+  --mat-button-protected-label-text-color: #ffffff;
+  border-radius: 8px !important;
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary.mat-mdc-button-base:hover {
+  background-color: var(--color-primary-hover) !important;
+}
+
+.btn-secondary.mat-mdc-button-base {
+  --mdc-outlined-button-outline-color: var(--color-border-strong);
+  --mdc-outlined-button-label-text-color: var(--color-text-muted);
+  --mat-button-outlined-outline-color: var(--color-border-strong);
+  --mat-button-outlined-label-text-color: var(--color-text-muted);
+  border-radius: 8px !important;
+  color: var(--color-text-muted) !important;
+  border-color: var(--color-border-strong) !important;
+  background-color: var(--color-surface) !important;
+}
+
+app-drawer-shell .mat-drawer-inner-container {
+  height: 100% !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 16px;
+  --mdc-dialog-subhead-trailing-space: 0;
+  --mdc-dialog-content-leading-space: 0;
+  --mdc-dialog-content-trailing-space: 0;
+  --mdc-dialog-with-actions-content-padding-bottom: 0;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  padding: 0;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 16px !important;
+  background: var(--color-surface);
+  padding: 0 !important;
+}
+
+.kebab-menu.mat-mdc-menu-panel {
+  min-width: 140px;
+  transform-origin: top right !important;
+  border: 1px solid var(--color-border);
+  box-shadow: 0px 2px 4px 1px rgba(231, 231, 231, 0.5);
+}
+
+.kebab-menu .mat-mdc-menu-content {
+  padding: 4px 0;
+}
+
+.kebab-menu .mat-mdc-menu-item {
+  min-height: 36px;
+  line-height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.kebab-menu .mat-mdc-menu-item .mat-mdc-menu-item-text {
+  padding: 0;
+}

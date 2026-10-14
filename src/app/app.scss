@@ -1,0 +1,13 @@
+.app-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: all;
+}
+
+.app-loading .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--color-primary);
+}
