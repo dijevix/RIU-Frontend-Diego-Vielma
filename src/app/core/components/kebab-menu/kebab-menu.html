@@ -1,0 +1,21 @@
+<button
+  mat-icon-button
+  type="button"
+  [matMenuTriggerFor]="menu"
+  [attr.aria-label]="ariaLabel()"
+>
+  <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+</button>
+
+<mat-menu
+  #menu="matMenu"
+  class="kebab-menu"
+  xPosition="before"
+  yPosition="below"
+>
+  @for (item of items(); track item.id) {
+    <button mat-menu-item type="button" (click)="onSelect(item.id)">
+      {{ item.label }}
+    </button>
+  }
+</mat-menu>
