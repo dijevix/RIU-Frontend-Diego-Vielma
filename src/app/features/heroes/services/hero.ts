@@ -28,7 +28,15 @@ export class HeroService {
   }
 
   searchHeroes(term: string): Hero[] {
-    return this.heroes().filter((hero) => hero.name.toLowerCase().includes(term.toLowerCase()));
+    const query = term.trim().toLowerCase();
+    if (!query) {
+      return this.heroes();
+    }
+    return this.heroes().filter((hero) =>
+      [hero.name, hero.realName, hero.lastName, hero.city].some((field) =>
+        field.toLowerCase().includes(query),
+      ),
+    );
   }
 
   updateHero(hero: Hero): void {

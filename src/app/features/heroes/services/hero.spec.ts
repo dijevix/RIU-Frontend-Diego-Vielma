@@ -46,9 +46,16 @@ describe('HeroService', () => {
         'Manolito el fuerte',
         'Batman',
         'Ironman',
+        'Black Widow',
         'Ant-Man',
-        'Spider-Man (2099)',
+        'Spider-Man 2099',
       ]);
+    });
+
+    it('matches real name last name or city', () => {
+      expect(service.searchHeroes('Peter').map((hero) => hero.name)).toEqual(['Spiderman']);
+      expect(service.searchHeroes('Parker').map((hero) => hero.name)).toEqual(['Spiderman']);
+      expect(service.searchHeroes('Gotham').map((hero) => hero.name)).toEqual(['Batman']);
     });
 
     it('matches the search without caring about case', () => {
@@ -58,17 +65,19 @@ describe('HeroService', () => {
         'Manolito el fuerte',
         'Batman',
         'Ironman',
+        'Black Widow',
         'Ant-Man',
-        'Spider-Man (2099)',
+        'Spider-Man 2099',
       ]);
     });
 
-    it('returns an empty list when no name matches', () => {
+    it('returns an empty list when nothing matches', () => {
       expect(service.searchHeroes('test string')).toEqual([]);
     });
 
     it('returns all heroes when the term is empty', () => {
       expect(service.searchHeroes('')).toEqual(service.getHeroes());
+      expect(service.searchHeroes('   ')).toEqual(service.getHeroes());
     });
   });
 
