@@ -1,59 +1,45 @@
 # Heroes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+SPA in Angular for maintaining superheroes (create, list, search, edit, delete).  
+Data lives in memory in a service — no backend.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 22 (standalone, signals, `@if` / `@for`)
+- Angular Material
+- Vitest (unit tests + coverage)
+- Docker + Nginx
 
-```bash
-ng serve
-```
+## Approach
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+State uses **signals** (`signal` / `computed` / `effect`) instead of RxJS streams for the hero list and UI state.  
+That keeps reactivity simple and matches the current Angular style. RxJS stays available via the framework, but the app logic is signal-first.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Setup
 
 ```bash
-ng generate --help
+npm install
+npm start
 ```
 
-## Building
+App: [http://localhost:4200](http://localhost:4200)
 
-To build the project run:
+## Tests
 
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+With coverage:
 
 ```bash
-ng test
+npx ng test --watch=false --coverage
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Docker
 
 ```bash
-ng e2e
+docker compose up --build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+App: [http://localhost:8080](http://localhost:8080)
