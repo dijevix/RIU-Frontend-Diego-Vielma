@@ -22,6 +22,10 @@ describe('List', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -33,13 +37,17 @@ describe('List', () => {
     expect(text).toContain('Manolito el fuerte');
   });
 
-  it('filters the table when searching by name', () => {
+  it('debounces search before updating the term', () => {
+    vi.useFakeTimers();
     component.onSearch('Batman');
+    expect(component.term()).toBe('');
+
+    vi.advanceTimersByTime(300);
     fixture.detectChanges();
 
-    const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain('Batman');
-    expect(text).not.toContain('Superman');
+    expect(component.term()).toBe('Batman');
+    expect(fixture.nativeElement.textContent).toContain('Batman');
+    expect(fixture.nativeElement.textContent).not.toContain('Superman');
   });
 
   it('opens an empty drawer for create', () => {
@@ -79,10 +87,15 @@ describe('List', () => {
     expect(component.opened()).toBe(true);
   });
 
-  it('filters from the search input', () => {
+  it('filters from the search input after debounce', () => {
+    vi.useFakeTimers();
     const inputEl = fixture.nativeElement.querySelector('.app-input__control') as HTMLInputElement;
     inputEl.value = 'Batman';
     inputEl.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(component.term()).toBe('');
+    vi.advanceTimersByTime(300);
     fixture.detectChanges();
 
     expect(component.term()).toBe('Batman');
