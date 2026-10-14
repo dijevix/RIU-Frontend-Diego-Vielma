@@ -5,13 +5,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ConfirmModal } from '../../../../core/components/confirm-modal/confirm-modal';
 import { trimmedLength } from '../../../../core/common/helpers/trimmed-length.validator';
+import { Uppercase } from '../../../../core/directives/uppercase/uppercase';
 import { Loading } from '../../../../core/loading/loading';
+import { Modal } from '../../../../core/modal/modal';
 import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero';
-import { Modal } from '../../services/modal';
 
 @Component({
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, Uppercase],
   selector: 'app-hero-form',
   styleUrl: './hero-form.scss',
   templateUrl: './hero-form.html',
@@ -40,8 +41,6 @@ export class HeroForm {
     validators: [trimmedLength(3, 25)],
   });
 
-  isEditing = false
-
   constructor() {
     effect(() => {
       const hero = this.activeHero();
@@ -53,7 +52,6 @@ export class HeroForm {
       this.realName.setValue(hero.realName);
       this.lastName.setValue(hero.lastName);
       this.city.setValue(hero.city);
-      this.isEditing = true;
     });
   }
 
@@ -87,16 +85,13 @@ export class HeroForm {
     this.loading.show();
     setTimeout(() => {
       this.heroService.create(data);
-      this.loading.hide();
-      this.resetForm();
-      this.saved.emit();
+      this.finishTrigger();
     }, 1000);
   }
 
   cancel(): void {
     this.resetForm();
     this.cancelled.emit();
-
   }
 
   resetForm(): void {
@@ -106,14 +101,18 @@ export class HeroForm {
     this.city.reset();
   }
 
+  finishTrigger(): void {
+    this.loading.hide();
+    this.resetForm();
+    this.saved.emit();
+  }
+
   triggerConfirmation(hero: Hero): void {
     this.modalService.closeModal();
     this.loading.show();
     setTimeout(() => {
       this.heroService.updateHero(hero);
-      this.loading.hide();
-      this.resetForm();
-      this.saved.emit();
+      this.finishTrigger();
     }, 1000);
   }
 }

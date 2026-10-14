@@ -5,7 +5,7 @@ import { ConfirmModal, ConfirmModalData } from '../../../../core/components/conf
 import { Loading } from '../../../../core/loading/loading';
 import { heroSeed } from '../../data/hero.seed';
 import { HeroService } from '../../services/hero';
-import { Modal } from '../../services/modal';
+import { Modal } from '../../../../core/modal/modal';
 import { HeroForm } from './hero-form';
 
 type ConfirmConfig = { data?: ConfirmModalData };

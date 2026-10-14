@@ -6,7 +6,7 @@ import { KebabMenu, KebabMenuItem } from '../../../../core/components/kebab-menu
 import { Loading } from '../../../../core/loading/loading';
 import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero';
-import { Modal } from '../../services/modal';
+import { Modal } from '../../../../core/modal/modal';
 
 @Component({
   imports: [MatTableModule, MatPaginatorModule, KebabMenu],
