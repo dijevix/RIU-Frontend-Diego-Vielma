@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.list-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.list-container__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.list-container__header button {
+  border-radius: 8px;
+}
+
+.list-container__search {
+  width: 251px;
+  max-width: 257px;
+}

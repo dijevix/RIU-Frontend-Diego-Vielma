@@ -1,0 +1,16 @@
+<app-drawer-shell [opened]="opened()" [title]="title()" (closed)="close()">
+  <div class="list-container">
+    <header class="list-container__header">
+      <app-input
+        class="list-container__search"
+        prefix="search"
+        placeholder="Search"
+        (valueChange)="onSearch($event)"
+      />
+      <button matButton="filled" class="btn-primary" type="button" (click)="open()">Create new</button>
+    </header>
+
+    <app-hero-table [term]="term()" (openDrawer)="openDrawerEdition($event)" />
+  </div>
+  <app-hero-form drawer-body (saved)="close()" (cancelled)="close()" [activeHero]="activeHero()" />
+</app-drawer-shell>
