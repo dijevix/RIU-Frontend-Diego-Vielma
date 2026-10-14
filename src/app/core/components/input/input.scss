@@ -1,0 +1,73 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.app-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.app-input__label {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.14px;
+  color: #000000;
+}
+
+.app-input__holder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 6px 8px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.app-input__holder:hover {
+  border-color: #000000;
+}
+
+.app-input__holder:focus-within {
+  border-color: #fa6400;
+}
+
+.app-input__icon {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  color: #4d4d4d;
+}
+
+.app-input__control {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.013em;
+  color: #000000;
+}
+
+.app-input__control::placeholder {
+  color: #666666;
+}
+
+.app-input__control::-webkit-search-decoration,
+.app-input__control::-webkit-search-cancel-button {
+  appearance: none;
+}

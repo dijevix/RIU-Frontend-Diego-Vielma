@@ -1,0 +1,18 @@
+<div class="app-input">
+  @if (label()) {
+    <label class="app-input__label">{{ label() }}</label>
+  }
+  <div class="app-input__holder">
+    @if (prefix()) {
+      <mat-icon class="app-input__icon" fontSet="material-symbols-outlined">{{ prefix() }}</mat-icon>
+    }
+    <input
+      class="app-input__control"
+      type="search"
+      [placeholder]="placeholder()"
+      [value]="value()"
+      (input)="value.set($any($event.target).value)"
+      autocomplete="off"
+    />
+  </div>
+</div>
