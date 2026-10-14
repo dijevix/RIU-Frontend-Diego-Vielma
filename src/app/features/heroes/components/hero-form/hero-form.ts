@@ -3,8 +3,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ConfirmModal } from '../../../../core/components/confirm-modal/confirm-modal';
 import { trimmedLength } from '../../../../core/common/helpers/trimmed-length.validator';
+import { ConfirmModal } from '../../../../core/components/confirm-modal/confirm-modal';
 import { Uppercase } from '../../../../core/directives/uppercase/uppercase';
 import { Loading } from '../../../../core/loading/loading';
 import { Modal } from '../../../../core/modal/modal';
@@ -71,6 +71,11 @@ export class HeroForm {
 
     const hero = this.activeHero();
     if (hero) {
+      if (this.hasNoChanges(hero, data)) {
+        this.resetForm();
+        this.saved.emit();
+        return;
+      }
       this.modalService.openModal(ConfirmModal, {
         data: {
           title: 'Edit hero',
@@ -105,6 +110,18 @@ export class HeroForm {
     this.loading.hide();
     this.resetForm();
     this.saved.emit();
+  }
+
+  private hasNoChanges(
+    hero: Hero,
+    data: { name: string; realName: string; lastName: string; city: string },
+  ): boolean {
+    return (
+      data.name === hero.name &&
+      data.realName === hero.realName &&
+      data.lastName === hero.lastName &&
+      data.city === hero.city
+    );
   }
 
   triggerConfirmation(hero: Hero): void {
