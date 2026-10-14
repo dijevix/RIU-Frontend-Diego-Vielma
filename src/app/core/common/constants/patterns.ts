@@ -1,3 +1,3 @@
 export const PATTERNS = {
-  lettersSpacesHyphenApostrophe: /^[\p{L}\s'-]+$/u,
+  heroText: /^[\p{L}\d\s-]+$/u,
 } as const;

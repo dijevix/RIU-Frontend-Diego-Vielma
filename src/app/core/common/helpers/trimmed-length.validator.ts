@@ -2,7 +2,7 @@ import { ValidatorFn } from '@angular/forms';
 import { PATTERNS } from '../constants/patterns';
 
 export const trimmedLength =
-  (min: number, max: number, pattern: RegExp = PATTERNS.lettersSpacesHyphenApostrophe): ValidatorFn =>
+  (min: number, max: number, pattern: RegExp = PATTERNS.heroText): ValidatorFn =>
   (control) => {
     const value = String(control.value ?? '').trim();
     if (!value) return { required: true };

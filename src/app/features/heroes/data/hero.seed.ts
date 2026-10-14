@@ -11,8 +11,8 @@ export const heroSeed: Hero[] = [
   { id: 8, name: 'Hulk', realName: 'Bruce', lastName: 'Banner', city: 'Dayton' },
   { id: 9, name: 'Black Widow', realName: 'Natasha', lastName: 'Romanoff', city: 'Stalingrad' },
   { id: 10, name: 'Hawkeye', realName: 'Clint', lastName: 'Barton', city: 'Waverly' },
-  { id: 11, name: 'Black Panther', realName: 'T', lastName: 'Challa', city: 'Wakanda' },
-  { id: 12, name: 'Dr. Strange', realName: 'Stephen', lastName: 'Strange', city: 'New York' },
+  { id: 11, name: 'Black Panther', realName: 'Tchalla', lastName: 'Challa', city: 'Wakanda' },
+  { id: 12, name: 'Doctor Strange', realName: 'Stephen', lastName: 'Strange', city: 'New York' },
   { id: 13, name: 'Ant-Man', realName: 'Scott', lastName: 'Lang', city: 'San Francisco' },
   { id: 14, name: 'Wasp', realName: 'Hope', lastName: 'van Dyne', city: 'San Francisco' },
   { id: 15, name: 'Scarlet Witch', realName: 'Wanda', lastName: 'Maximoff', city: 'Sokovia' },
@@ -20,5 +20,5 @@ export const heroSeed: Hero[] = [
   { id: 17, name: 'Quicksilver', realName: 'Pietro', lastName: 'Maximoff', city: 'Sokovia' },
   { id: 18, name: 'Scarlet Spider', realName: 'Ben', lastName: 'Reilly', city: 'New York' },
   { id: 19, name: 'Spider-Gwen', realName: 'Gwen', lastName: 'Stacy', city: 'New York' },
-  { id: 20, name: 'Spider-Man (2099)', realName: 'Miguel', lastName: 'OHara', city: 'Nueva York' },
+  { id: 20, name: 'Spider-Man 2099', realName: 'Miguel', lastName: 'OHara', city: 'Nueva York' },
 ];
