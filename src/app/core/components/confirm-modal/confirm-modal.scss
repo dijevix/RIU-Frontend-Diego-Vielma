@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  width: 420px;
+  max-width: calc(100vw - 48px);
+}
+
+.confirm-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 28px 24px;
+  box-sizing: border-box;
+}
+
+.confirm-modal__title {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.confirm-modal__body {
+  margin: 0;
+  padding: 0 !important;
+}
+
+.confirm-modal__message {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.confirm-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding: 0 !important;
+  min-height: auto;
+}
+
+.confirm-modal__actions .mat-mdc-button-base {
+  min-width: 104px;
+}
