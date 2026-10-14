@@ -1,0 +1,23 @@
+<mat-drawer-container class="drawer-shell" [hasBackdrop]="true">
+  <mat-drawer
+    class="drawer-shell__panel"
+    mode="over"
+    position="end"
+    [opened]="opened()"
+    (closedStart)="close()"
+  >
+    <div class="drawer-shell__layout">
+      <header class="drawer-shell__header">
+        <h2 class="drawer-shell__title">{{ title() }}</h2>
+      </header>
+
+      <div class="drawer-shell__body">
+        <ng-content select="[drawer-body]"></ng-content>
+      </div>
+    </div>
+  </mat-drawer>
+
+  <mat-drawer-content class="drawer-shell__content">
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>
