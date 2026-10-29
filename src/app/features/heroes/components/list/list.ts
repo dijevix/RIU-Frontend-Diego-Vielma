@@ -1,8 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DrawerShell } from '../../../../core/components/drawer/drawer';
 import { Input } from '../../../../core/components/input/input';
-import { Hero } from '../../models/hero.model';
 import { HeroForm } from '../hero-form/hero-form';
 import { HeroTable } from '../hero-table/hero-table';
 
@@ -17,12 +16,9 @@ const SEARCH_DEBOUNCE_MS = 300;
 export class List {
   private searchTimer: ReturnType<typeof setTimeout> | undefined;
   readonly opened = signal(false);
-  readonly activeHero = signal<Hero | null>(null);
   readonly term = signal('');
-  readonly title = computed(() => (this.activeHero() ? 'Edit hero' : 'New hero'));
 
   open(): void {
-    this.activeHero.set(null);
     this.opened.set(true);
   }
 
@@ -33,10 +29,5 @@ export class List {
   onSearch(value: string): void {
     clearTimeout(this.searchTimer);
     this.searchTimer = setTimeout(() => this.term.set(value), SEARCH_DEBOUNCE_MS);
-  }
-
-  openDrawerEdition(event: Hero): void {
-    this.activeHero.set(event ?? null);
-    this.opened.set(true);
   }
 }

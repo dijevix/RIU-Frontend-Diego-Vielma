@@ -1,18 +1,17 @@
-import { Component, effect, inject, input, output } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, input, linkedSignal, output } from '@angular/core';
+import { form, FormField, maxLength, validate } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { trimmedLength } from '../../../../core/common/helpers/trimmed-length.validator';
 import { ConfirmModal } from '../../../../core/components/confirm-modal/confirm-modal';
 import { Uppercase } from '../../../../core/directives/uppercase/uppercase';
-import { Loading } from '../../../../core/loading/loading';
 import { Modal } from '../../../../core/modal/modal';
-import { Hero } from '../../models/hero.model';
+import { emptyHero, fromHero, HeroFields, validateHeroText } from '../../helpers/hero-fields';
+import { CreateHero, Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero';
 
 @Component({
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, Uppercase],
+  imports: [FormField, MatFormFieldModule, MatInputModule, MatButtonModule, Uppercase],
   selector: 'app-hero-form',
   styleUrl: './hero-form.scss',
   templateUrl: './hero-form.html',
@@ -21,53 +20,38 @@ export class HeroForm {
   readonly activeHero = input<Hero | null>();
   readonly heroService = inject(HeroService);
   readonly modalService = inject(Modal);
-  private readonly loading = inject(Loading);
   readonly saved = output<void>();
   readonly cancelled = output<void>();
-  readonly name = new FormControl('', {
-    nonNullable: true,
-    validators: [trimmedLength(3, 25)],
-  });
-  readonly realName = new FormControl('', {
-    nonNullable: true,
-    validators: [trimmedLength(3, 25)],
-  });
-  readonly lastName = new FormControl('', {
-    nonNullable: true,
-    validators: [trimmedLength(3, 25)],
-  });
-  readonly city = new FormControl('', {
-    nonNullable: true,
-    validators: [trimmedLength(3, 25)],
+
+  private readonly model = linkedSignal<Hero | null | undefined, HeroFields>({
+    source: this.activeHero,
+    computation: (hero) => (hero ? fromHero(hero) : emptyHero()),
   });
 
-  constructor() {
-    effect(() => {
-      const hero = this.activeHero();
-      if (!hero) {
-        this.resetForm();
-        return;
-      }
-      this.name.setValue(hero.name);
-      this.realName.setValue(hero.realName);
-      this.lastName.setValue(hero.lastName);
-      this.city.setValue(hero.city);
-    });
-  }
-
+  readonly heroForm = form(this.model, (schemaPath) => {
+    maxLength(schemaPath.name, 25);
+    maxLength(schemaPath.realName, 25);
+    maxLength(schemaPath.lastName, 25);
+    maxLength(schemaPath.city, 25);
+    validate(schemaPath.name, ({ value }) => validateHeroText(value()));
+    validate(schemaPath.realName, ({ value }) => validateHeroText(value()));
+    validate(schemaPath.lastName, ({ value }) => validateHeroText(value()));
+    validate(schemaPath.city, ({ value }) => validateHeroText(value()));
+  });
 
   save(event: Event): void {
     event.preventDefault();
-    if (this.name.invalid || this.realName.invalid || this.lastName.invalid || this.city.invalid) {
+    if (this.heroForm().invalid()) {
       return;
     }
 
-    const data = {
-      name: this.name.value.trim(),
-      realName: this.realName.value.trim(),
-      lastName: this.lastName.value.trim(),
-      city: this.city.value.trim(),
-    }
+    const raw = this.heroForm().value();
+    const data: CreateHero = {
+      name: raw.name.trim(),
+      realName: raw.realName.trim(),
+      lastName: raw.lastName.trim(),
+      city: raw.city.trim(),
+    };
 
     const hero = this.activeHero();
     if (hero) {
@@ -87,11 +71,7 @@ export class HeroForm {
       return;
     }
 
-    this.loading.show();
-    setTimeout(() => {
-      this.heroService.create(data);
-      this.finishTrigger();
-    }, 1000);
+    this.heroService.create(data).subscribe(() => this.finishTrigger());
   }
 
   cancel(): void {
@@ -100,36 +80,25 @@ export class HeroForm {
   }
 
   resetForm(): void {
-    this.name.reset();
-    this.realName.reset();
-    this.lastName.reset();
-    this.city.reset();
+    this.model.set(emptyHero());
   }
 
   finishTrigger(): void {
-    this.loading.hide();
     this.resetForm();
     this.saved.emit();
   }
 
-  private hasNoChanges(
-    hero: Hero,
-    data: { name: string; realName: string; lastName: string; city: string },
-  ): boolean {
+  private hasNoChanges(hero: Hero, data: CreateHero): boolean {
     return (
-      data.name === hero.name &&
-      data.realName === hero.realName &&
-      data.lastName === hero.lastName &&
-      data.city === hero.city
+      data.name === hero.name.trim() &&
+      data.realName === hero.realName.trim() &&
+      data.lastName === hero.lastName.trim() &&
+      data.city === hero.city.trim()
     );
   }
 
   triggerConfirmation(hero: Hero): void {
     this.modalService.closeModal();
-    this.loading.show();
-    setTimeout(() => {
-      this.heroService.updateHero(hero);
-      this.finishTrigger();
-    }, 1000);
+    this.heroService.updateHero(hero).subscribe(() => this.finishTrigger());
   }
 }

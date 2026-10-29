@@ -1,8 +1,10 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { ConfirmModal, ConfirmModalData } from '../../../../core/components/confirm-modal/confirm-modal';
 import { Loading } from '../../../../core/loading/loading';
+import { provideHeroesHttp } from '../../../../testing/http-providers';
 import { heroSeed } from '../../data/hero.seed';
 import { HeroService } from '../../services/hero';
 import { Modal } from '../../../../core/modal/modal';
@@ -20,7 +22,7 @@ describe('HeroTable', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeroTable],
-      providers: [provideNoopAnimations()],
+      providers: [provideNoopAnimations(), provideRouter([]), provideHeroesHttp()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroTable);
@@ -61,17 +63,9 @@ describe('HeroTable', () => {
     fixture.componentRef.setInput('term', 'Spider');
     fixture.detectChanges();
 
+    expect(component['pageIndex']()).toBe(0);
     const text = fixture.nativeElement.textContent as string;
     expect(text).toContain('Spiderman');
-  });
-
-  it('emits openDrawer when editing', () => {
-    const emitted = vi.fn();
-    component.openDrawer.subscribe(emitted);
-
-    component['edit'](heroSeed[0]);
-
-    expect(emitted).toHaveBeenCalledWith(heroSeed[0]);
   });
 
   it('opens the confirm modal when removing', () => {
@@ -129,9 +123,7 @@ describe('HeroTable', () => {
     expect(loading.active()).toBe(false);
   });
 
-  it('edits and removes from the kebab menu', () => {
-    const emitted = vi.fn();
-    component.openDrawer.subscribe(emitted);
+  it('removes from the kebab menu', () => {
     const openModal = vi.spyOn(modal, 'openModal').mockReturnValue({} as never);
 
     const trigger = fixture.nativeElement.querySelector('button[mat-icon-button]') as HTMLButtonElement;
@@ -140,28 +132,16 @@ describe('HeroTable', () => {
 
     const menuButtons = document.querySelectorAll('button[mat-menu-item]');
     (menuButtons[0] as HTMLButtonElement).click();
-    expect(emitted).toHaveBeenCalled();
-
-    trigger.click();
-    fixture.detectChanges();
-    const menuButtonsAgain = document.querySelectorAll('button[mat-menu-item]');
-    (menuButtonsAgain[1] as HTMLButtonElement).click();
     expect(openModal).toHaveBeenCalled();
   });
 
   it('routes kebab actions', () => {
-    const emitted = vi.fn();
-    component.openDrawer.subscribe(emitted);
     const openModal = vi.spyOn(modal, 'openModal').mockReturnValue({} as never);
-
-    component['onAction']('edit', heroSeed[0]);
-    expect(emitted).toHaveBeenCalledWith(heroSeed[0]);
 
     component['onAction']('remove', heroSeed[1]);
     expect(openModal).toHaveBeenCalled();
 
     component['onAction']('unknown', heroSeed[0]);
-    expect(emitted).toHaveBeenCalledTimes(1);
     expect(openModal).toHaveBeenCalledTimes(1);
   });
 
@@ -179,5 +159,10 @@ describe('HeroTable', () => {
       .triggerEventHandler('page', { pageIndex: 1, pageSize: 10, length: 20 });
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Black Panther');
+  });
+
+  it('links the hero name to the detail route', () => {
+    const link = fixture.nativeElement.querySelector('a.list__link') as HTMLAnchorElement;
+    expect(link.getAttribute('href')).toContain('/heroes/1');
   });
 });

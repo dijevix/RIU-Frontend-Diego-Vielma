@@ -1,9 +1,11 @@
+@use '@angular/material' as mat;
+
 :host {
   display: block;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
-  box-shadow: 0px 2px 4px 1px rgba(231, 231, 231, 0.5);
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.25rem 0.0625rem rgba(231, 231, 231, 0.5);
   overflow: hidden;
 }
 
@@ -11,6 +13,15 @@
   width: 100%;
   margin-inline: auto;
   background: var(--color-surface);
+}
+
+.list__link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.list__link:hover {
+  text-decoration: underline;
 }
 
 .list .mat-mdc-header-row {
@@ -21,7 +32,7 @@
 .list .mat-mdc-header-cell {
   color: var(--color-text-muted);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .list .mat-mdc-cell {
@@ -51,12 +62,16 @@
 }
 
 .actions .mat-mdc-icon-button {
-  margin-inline: -8px;
+  margin-inline: -0.5rem;
   color: var(--color-text-muted);
 }
 
-:host ::ng-deep .mat-mdc-paginator {
-  background: var(--color-surface);
-  color: var(--color-text-muted);
+mat-paginator {
+  @include mat.paginator-overrides(
+    (
+      container-background-color: var(--color-surface),
+      container-text-color: var(--color-text-muted),
+    )
+  );
   border-top: 1px solid var(--color-border);
 }

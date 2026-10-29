@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.hero-detail {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.hero-detail__title {
+  margin: 0 0 1rem;
+  font: var(--mat-sys-headline-small);
+  color: var(--color-text);
+  outline: none;
+}
+
+.hero-detail__fields {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.hero-detail__fields dt {
+  margin: 0;
+  font: var(--mat-sys-label-medium);
+  color: var(--color-text-muted);
+}
+
+.hero-detail__fields dd {
+  margin: 0.25rem 0 0;
+  font: var(--mat-sys-body-large);
+  color: var(--color-text);
+}
+
+.hero-detail__empty {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.hero-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
