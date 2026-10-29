@@ -3,39 +3,12 @@ import { form, FormField, maxLength, validate } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PATTERNS } from '../../../../core/common/constants/patterns';
 import { ConfirmModal } from '../../../../core/components/confirm-modal/confirm-modal';
 import { Uppercase } from '../../../../core/directives/uppercase/uppercase';
 import { Modal } from '../../../../core/modal/modal';
+import { emptyHero, fromHero, HeroFields, validateHeroText } from '../../helpers/hero-fields';
 import { CreateHero, Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero';
-
-type HeroFields = CreateHero;
-
-const emptyHero = (): HeroFields => ({
-  name: '',
-  realName: '',
-  lastName: '',
-  city: '',
-});
-
-const fromHero = (hero: Hero): HeroFields => ({
-  name: hero.name,
-  realName: hero.realName,
-  lastName: hero.lastName,
-  city: hero.city,
-});
-
-const fieldError = (kind: string) => ({ kind, message: '3–25 chars. Letters, numbers, spaces or hyphens only.' });
-
-const validateHeroText = (value: string | undefined) => {
-  const trimmed = String(value ?? '').trim();
-  if (!trimmed) return fieldError('required');
-  if (trimmed.length < 3) return fieldError('minlength');
-  if (trimmed.length > 25) return fieldError('maxlength');
-  if (!PATTERNS.heroText.test(trimmed)) return fieldError('pattern');
-  return undefined;
-};
 
 @Component({
   imports: [FormField, MatFormFieldModule, MatInputModule, MatButtonModule, Uppercase],
