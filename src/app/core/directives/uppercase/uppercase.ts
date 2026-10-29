@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import { FORM_FIELD } from '@angular/forms/signals';
 
 @Directive({
   selector: 'input[appUppercase]',
@@ -7,6 +8,7 @@ import { NgControl } from '@angular/forms';
 export class Uppercase {
   private readonly el = inject(ElementRef<HTMLInputElement>);
   private readonly ngControl = inject(NgControl, { optional: true, self: true });
+  private readonly formField = inject(FORM_FIELD, { optional: true, self: true });
 
   @HostListener('input')
   onInput(): void {
@@ -19,6 +21,13 @@ export class Uppercase {
     }
     input.value = upper;
     input.setSelectionRange(start, end);
-    this.ngControl?.control?.setValue(upper, { emitEvent: false });
+    if (this.formField) {
+      this.formField.state().value.set(upper);
+      return;
+    }
+    const control = this.ngControl?.control;
+    if (control && typeof control.setValue === 'function') {
+      control.setValue(upper, { emitEvent: false });
+    }
   }
 }

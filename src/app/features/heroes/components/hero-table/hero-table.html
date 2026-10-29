@@ -6,7 +6,9 @@
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let hero">{{ hero.name }}</td>
+    <td mat-cell *matCellDef="let hero">
+      <a class="list__link" [routerLink]="['/heroes', hero.id]">{{ hero.name }}</a>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="realName">
@@ -41,7 +43,8 @@
 
 <mat-paginator
   [length]="totalHeroes"
-  [pageSize]="pageSize"
+  [pageIndex]="pageIndex()"
+  [pageSize]="pageSize()"
   [pageSizeOptions]="pageSizeOptions"
   aria-label="Select page"
   (page)="onPage($event)"

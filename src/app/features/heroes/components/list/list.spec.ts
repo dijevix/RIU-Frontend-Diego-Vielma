@@ -1,10 +1,10 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { DrawerShell } from '../../../../core/components/drawer/drawer';
-import { heroSeed } from '../../data/hero.seed';
+import { provideHeroesHttp } from '../../../../testing/http-providers';
 import { HeroForm } from '../hero-form/hero-form';
-import { HeroTable } from '../hero-table/hero-table';
 import { List } from './list';
 
 describe('List', () => {
@@ -14,7 +14,7 @@ describe('List', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [List],
-      providers: [provideNoopAnimations()],
+      providers: [provideNoopAnimations(), provideRouter([]), provideHeroesHttp()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(List);
@@ -55,16 +55,6 @@ describe('List', () => {
     fixture.detectChanges();
 
     expect(component.opened()).toBe(true);
-    expect(component.activeHero()).toBeNull();
-  });
-
-  it('opens the drawer with the hero to edit', () => {
-    const hero = heroSeed[0];
-    component.openDrawerEdition(hero);
-    fixture.detectChanges();
-
-    expect(component.opened()).toBe(true);
-    expect(component.activeHero()).toEqual(hero);
   });
 
   it('closes the drawer', () => {
@@ -77,13 +67,6 @@ describe('List', () => {
     const button = fixture.nativeElement.querySelector('.btn-primary') as HTMLButtonElement;
     button.click();
     fixture.detectChanges();
-    expect(component.opened()).toBe(true);
-    expect(component.activeHero()).toBeNull();
-  });
-
-  it('handles a nullish hero on edition', () => {
-    component.openDrawerEdition(null as never);
-    expect(component.activeHero()).toBeNull();
     expect(component.opened()).toBe(true);
   });
 
@@ -121,14 +104,5 @@ describe('List', () => {
     component.open();
     form.cancelled.emit();
     expect(component.opened()).toBe(false);
-  });
-
-  it('opens edition when the table emits openDrawer', () => {
-    const table = fixture.debugElement.query(By.directive(HeroTable)).componentInstance as HeroTable;
-    table.openDrawer.emit(heroSeed[0]);
-    fixture.detectChanges();
-
-    expect(component.opened()).toBe(true);
-    expect(component.activeHero()).toEqual(heroSeed[0]);
   });
 });

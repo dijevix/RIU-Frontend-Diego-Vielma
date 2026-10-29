@@ -1,0 +1,41 @@
+<section class="hero-detail">
+  @if (hero(); as current) {
+    @if (editing()) {
+      <h1 #title class="hero-detail__title" tabindex="-1">Edit hero</h1>
+      <app-hero-form
+        [activeHero]="current"
+        (saved)="stopEdit()"
+        (cancelled)="stopEdit()"
+      />
+    } @else {
+      <h1 #title class="hero-detail__title" tabindex="-1">{{ current.name }}</h1>
+      <dl class="hero-detail__fields">
+        <div>
+          <dt>Real name</dt>
+          <dd>{{ current.realName }}</dd>
+        </div>
+        <div>
+          <dt>Last name</dt>
+          <dd>{{ current.lastName }}</dd>
+        </div>
+        <div>
+          <dt>City</dt>
+          <dd>{{ current.city }}</dd>
+        </div>
+      </dl>
+      <div class="hero-detail__actions">
+        <a matButton="outlined" class="btn-secondary" routerLink="/heroes">Back to heroes</a>
+        <button matButton="outlined" class="btn-secondary" type="button" (click)="remove(current)">
+          Delete
+        </button>
+        <button matButton="filled" class="btn-primary" type="button" (click)="startEdit()">
+          Edit
+        </button>
+      </div>
+    }
+  } @else {
+    <h1 #title class="hero-detail__title" tabindex="-1">Hero not found</h1>
+    <p class="hero-detail__empty">No hero matches this id.</p>
+    <a matButton="outlined" class="btn-secondary" routerLink="/heroes">Back to heroes</a>
+  }
+</section>

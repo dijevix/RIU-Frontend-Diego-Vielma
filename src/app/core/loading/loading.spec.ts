@@ -19,4 +19,14 @@ describe('Loading', () => {
     loading.hide();
     expect(loading.active()).toBe(false);
   });
+
+  it('stays active until every show has a matching hide', () => {
+    loading.show();
+    loading.show();
+    loading.hide();
+    expect(loading.active()).toBe(true);
+    loading.hide();
+    expect(loading.active()).toBe(false);
+  });
 });
+

@@ -1,14 +1,15 @@
-import { Service, signal } from '@angular/core';
+import { Service, computed, signal } from '@angular/core';
 
 @Service()
 export class Loading {
-  readonly active = signal(false);
+  private readonly pending = signal(0);
+  readonly active = computed(() => this.pending() > 0);
 
   show(): void {
-    this.active.set(true);
+    this.pending.update((count) => count + 1);
   }
 
   hide(): void {
-    this.active.set(false);
+    this.pending.update((count) => Math.max(0, count - 1));
   }
 }

@@ -1,49 +1,35 @@
-import { Service, signal } from '@angular/core';
-import { heroSeed } from '../data/hero.seed';
+import { HttpClient } from '@angular/common/http';
+import { Service, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CreateHero, Hero } from '../models/hero.model';
+import { HeroStore } from './hero-store';
 
 @Service()
 export class HeroService {
-  private readonly heroes = signal<Hero[]>([...heroSeed]);
-  private nextId = heroSeed.length + 1;
-
-  create(data: CreateHero): Hero {
-    const hero: Hero = {
-      id: this.nextId++,
-      name: data.name.trim(),
-      realName: data.realName.trim(),
-      lastName: data.lastName.trim(),
-      city: data.city.trim(),
-    };
-    this.heroes.update((list) => [...list, hero]);
-    return hero;
-  }
+  private readonly http = inject(HttpClient);
+  private readonly store = inject(HeroStore);
 
   getHeroes(): Hero[] {
-    return this.heroes();
+    return this.store.getHeroes();
   }
 
   getHero(id: number): Hero | undefined {
-    return this.heroes().find((hero) => hero.id === id);
+    return this.store.getHero(id);
   }
 
   searchHeroes(term: string): Hero[] {
-    const query = term.trim().toLowerCase();
-    if (!query) {
-      return this.heroes();
-    }
-    return this.heroes().filter((hero) =>
-      [hero.name, hero.realName, hero.lastName, hero.city].some((field) =>
-        field.toLowerCase().includes(query),
-      ),
-    );
+    return this.store.searchHeroes(term);
   }
 
-  updateHero(hero: Hero): void {
-    this.heroes.update((list) => list.map((item) => (item.id === hero.id ? hero : item)));
+  create(data: CreateHero): Observable<Hero> {
+    return this.http.post<Hero>('/api/heroes', data);
   }
 
-  deleteHero(id: number): void {
-    this.heroes.update((list) => list.filter((hero) => hero.id !== id));
+  updateHero(hero: Hero): Observable<Hero> {
+    return this.http.put<Hero>(`/api/heroes/${hero.id}`, hero);
+  }
+
+  deleteHero(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/heroes/${id}`);
   }
 }
