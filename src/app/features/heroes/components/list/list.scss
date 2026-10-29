@@ -3,24 +3,24 @@
 }
 
 .list-container {
-  max-width: 1220px;
+  max-width: 76.25rem;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 1.5rem 1rem;
 }
 
 .list-container__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .list-container__header button {
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .list-container__search {
-  width: 251px;
-  max-width: 257px;
+  width: 15.6875rem;
+  max-width: 16.0625rem;
 }

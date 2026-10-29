@@ -21,8 +21,8 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  row-gap: 24px;
-  padding-top: 12px;
+  row-gap: 1.5rem;
+  padding-top: 0.75rem;
 }
 
 .hero-form__field {
@@ -35,10 +35,10 @@
   flex: 0 0 auto;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 16px;
+  padding-top: 1rem;
   background: var(--color-surface);
 }
 
 .hero-form__actions button + button {
-  margin-left: 16px;
+  margin-left: 1rem;
 }

@@ -40,41 +40,43 @@ body {
   height: 100%;
 }
 
-.btn-primary.mat-mdc-button-base,
-.btn-primary.mat-mdc-unelevated-button,
-.btn-primary.mat-mdc-raised-button {
-  --mdc-filled-button-container-color: var(--color-primary);
-  --mdc-filled-button-label-text-color: #ffffff;
-  --mdc-protected-button-container-color: var(--color-primary);
-  --mdc-protected-button-label-text-color: #ffffff;
-  --mat-button-filled-container-color: var(--color-primary);
-  --mat-button-filled-label-text-color: #ffffff;
-  --mat-button-protected-container-color: var(--color-primary);
-  --mat-button-protected-label-text-color: #ffffff;
-  border-radius: 8px !important;
-  background-color: var(--color-primary) !important;
-  color: #ffffff !important;
+.btn-primary {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--color-primary),
+      filled-label-text-color: #ffffff,
+      filled-container-shape: 0.5rem,
+      filled-state-layer-color: #ffffff,
+      protected-container-color: var(--color-primary),
+      protected-label-text-color: #ffffff,
+      protected-container-shape: 0.5rem,
+    )
+  );
 }
 
-.btn-primary.mat-mdc-button-base:hover {
-  background-color: var(--color-primary-hover) !important;
+.btn-primary:hover {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--color-primary-hover),
+    )
+  );
 }
 
-.btn-secondary.mat-mdc-button-base {
-  --mdc-outlined-button-outline-color: var(--color-border-strong);
-  --mdc-outlined-button-label-text-color: var(--color-text-muted);
-  --mat-button-outlined-outline-color: var(--color-border-strong);
-  --mat-button-outlined-label-text-color: var(--color-text-muted);
-  border-radius: 8px !important;
-  color: var(--color-text-muted) !important;
-  border-color: var(--color-border-strong) !important;
-  background-color: var(--color-surface) !important;
+.btn-secondary {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--color-border-strong),
+      outlined-label-text-color: var(--color-text-muted),
+      outlined-container-shape: 0.5rem,
+    )
+  );
+  background-color: var(--color-surface);
 }
 
 app-drawer-shell .mat-drawer-inner-container {
-  height: 100% !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
@@ -82,40 +84,41 @@ app-drawer-shell .mat-drawer-inner-container {
 }
 
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-shape: 16px;
-  --mdc-dialog-subhead-trailing-space: 0;
-  --mdc-dialog-content-leading-space: 0;
-  --mdc-dialog-content-trailing-space: 0;
-  --mdc-dialog-with-actions-content-padding-bottom: 0;
-  border-radius: 16px;
+  @include mat.dialog-overrides(
+    (
+      container-shape: 1rem,
+      content-padding: 0,
+      with-actions-content-padding: 0,
+      container-color: var(--color-surface),
+    )
+  );
   border: 1px solid var(--color-border);
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
   overflow: hidden;
   padding: 0;
 }
 
-.mat-mdc-dialog-container .mdc-dialog__surface {
-  border-radius: 16px !important;
-  background: var(--color-surface);
-  padding: 0 !important;
-}
-
 .kebab-menu.mat-mdc-menu-panel {
-  min-width: 140px;
-  transform-origin: top right !important;
+  @include mat.menu-overrides(
+    (
+      container-shape: 0.5rem,
+    )
+  );
+  min-width: 8.75rem;
+  transform-origin: top right;
   border: 1px solid var(--color-border);
-  box-shadow: 0px 2px 4px 1px rgba(231, 231, 231, 0.5);
+  box-shadow: 0 0.125rem 0.25rem 0.0625rem rgba(231, 231, 231, 0.5);
 }
 
 .kebab-menu .mat-mdc-menu-content {
-  padding: 4px 0;
+  padding: 0.25rem 0;
 }
 
 .kebab-menu .mat-mdc-menu-item {
-  min-height: 36px;
-  line-height: 36px;
-  padding: 0 12px;
-  font-size: 14px;
+  min-height: 2.25rem;
+  line-height: 2.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
   color: var(--color-text);
 }
 
