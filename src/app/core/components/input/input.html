@@ -1,6 +1,6 @@
 <div class="app-input">
   @if (label()) {
-    <label class="app-input__label">{{ label() }}</label>
+    <label class="app-input__label" [attr.for]="controlId">{{ label() }}</label>
   }
   <div class="app-input__holder">
     @if (prefix()) {
@@ -9,6 +9,8 @@
     <input
       class="app-input__control"
       type="search"
+      [id]="controlId"
+      [attr.aria-label]="ariaLabel() || null"
       [placeholder]="placeholder()"
       [value]="value()"
       (input)="value.set($any($event.target).value)"

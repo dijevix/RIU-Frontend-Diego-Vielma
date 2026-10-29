@@ -38,4 +38,19 @@ describe('Input', () => {
     fixture.detectChanges();
     expect(component.value()).toBe('Batman');
   });
+
+  it('sets aria-label on the control', () => {
+    fixture.componentRef.setInput('ariaLabel', 'Search heroes');
+    fixture.detectChanges();
+    const inputEl = fixture.nativeElement.querySelector('.app-input__control') as HTMLInputElement;
+    expect(inputEl.getAttribute('aria-label')).toBe('Search heroes');
+  });
+
+  it('associates a visible label with the control', () => {
+    fixture.componentRef.setInput('label', 'Search');
+    fixture.detectChanges();
+    const label = fixture.nativeElement.querySelector('label') as HTMLLabelElement;
+    const inputEl = fixture.nativeElement.querySelector('.app-input__control') as HTMLInputElement;
+    expect(label.getAttribute('for')).toBe(inputEl.id);
+  });
 });
